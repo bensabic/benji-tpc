@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/typescript-strict-blue" alt="TypeScript strict" />
   <img src="https://img.shields.io/badge/next.js-16-black" alt="Next.js 16" />
   <img src="https://img.shields.io/badge/bun-1.4-f9f1e1" alt="Bun 1.4" />
-  <img src="https://img.shields.io/badge/eve-0.79-blueviolet" alt="Eve 0.79" />
+  <img src="https://img.shields.io/badge/eve-1.1-blueviolet" alt="Eve 1.1" />
   <img src="https://img.shields.io/badge/license-MIT-lightgrey" alt="License MIT" />
 </p>
 
@@ -21,7 +21,7 @@ sellers on the delivered total, checks the merchant's own page, and takes the it
 as the payment page.
 
 <p align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpromptingcompany%2Fdealfinder&env=OPENAI_API_KEY,BROWSERBASE_API_KEY,BENJI_OPERATOR_USERNAME,BENJI_OPERATOR_PASSWORD&envDescription=An+OpenAI+key+for+the+model,+a+Browserbase+key+for+the+hosted+browser,+and+the+username+and+password+%28at+least+32+characters%29+that+protect+your+deployment.&envLink=https%3A%2F%2Fgithub.com%2Fpromptingcompany%2Fdealfinder%23keys&project-name=benji&repository-name=benji"><img src="https://vercel.com/button" alt="Deploy with Vercel" height="44"></a>
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpromptingcompany%2Fbenji&env=AI_GATEWAY_API_KEY,BROWSERBASE_API_KEY,BENJI_OPERATOR_USERNAME,BENJI_OPERATOR_PASSWORD&envDescription=An+AI+Gateway+key+for+the+model,+a+Browserbase+key+for+the+hosted+browser,+and+the+username+and+password+%28at+least+32+characters%29+that+protect+your+deployment.&envLink=https%3A%2F%2Fgithub.com%2Fpromptingcompany%2Fbenji%23keys&project-name=benji&repository-name=benji"><img src="https://vercel.com/button" alt="Deploy with Vercel" height="44"></a>
 </p>
 
 It follows rules drawn from a study of how personal agents shop on live stores:
@@ -38,24 +38,24 @@ It follows rules drawn from a study of how personal agents shop on live stores:
 
 ```mermaid
 flowchart TD
-    request["Shopping request"] --> kind{"What kind of request?"}
-    kind -- "open discovery or comparison" --> research["Research the web (web_search, web_fetch)"]
-    kind -- "named product or buy it" --> sellers
+    request["Shopping request"] --> kind{"What kind<br/>of request?"}
+    kind -- "open discovery<br/>or comparison" --> research["Research the web<br/>(web_search, web_fetch)"]
+    kind -- "named product<br/>or buy it" --> sellers
     research --> product["Pick the product"]
-    product --> sellers["Check at least 3 sellers, brand site included"]
-    sellers --> total["Compare delivered totals and unit prices (compare_offers)"]
-    total --> buy{"Asked to add to cart or check out?"}
-    buy -- no --> recommend["Recommend the product and seller"]
-    buy -- yes --> open["Open the exact product in the browser"]
-    open --> exact{"Exact product and variant in stock?"}
-    exact -- no --> ask["Stop and ask, never substitute"]
-    exact -- yes --> cart["Add to cart, read the cart back"]
+    product --> sellers["Check at least 3 sellers,<br/>brand site included"]
+    sellers --> total["Compare delivered totals<br/>and unit prices<br/>(compare_offers)"]
+    total --> buy{"Asked to<br/>add to cart<br/>or check out?"}
+    buy -- no --> recommend["Recommend the<br/>product and seller"]
+    buy -- yes --> open["Open the exact product<br/>in the browser"]
+    open --> exact{"Exact product<br/>and variant<br/>in stock?"}
+    exact -- no --> ask["Stop and ask,<br/>never substitute"]
+    exact -- yes --> cart["Add to cart,<br/>read the cart back"]
     cart --> guest["Check out as a guest"]
-    guest --> human{"Sign-in, CAPTCHA or one-time code?"}
-    human -- yes --> handoff["Hand off to the shopper (human_handoff)"]
+    guest --> human{"Sign-in, CAPTCHA<br/>or one-time code?"}
+    human -- yes --> handoff["Hand off to the shopper<br/>(human_handoff)"]
     handoff --> guest
-    human -- no --> pay["Reach the payment page and stop"]
-    pay --> report["Report each step: done, blocked or not attempted"]
+    human -- no --> pay["Reach the payment<br/>page and stop"]
+    pay --> report["Report each step:<br/>done, blocked or not attempted"]
 
     classDef step fill:#FFFFFF,stroke:#9AA3AF,color:#111827
     classDef decision fill:#E8F0FE,stroke:#2F6FEB,color:#0B1F44
@@ -73,18 +73,18 @@ Two keys run the full agent. Everything else is optional and off by default.
 
 | Variable | Needed | What it does | Where to get it |
 | --- | --- | --- | --- |
-| `OPENAI_API_KEY` | Always | Runs the model (`gpt-5.6-sol` by default). | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) |
+| `AI_GATEWAY_API_KEY` | Always | Runs the model (`openai/gpt-5.6-sol` by default) through AI Gateway. A Vercel deployment can use its OIDC token instead. | [vercel.com/docs/ai-gateway](https://vercel.com/docs/ai-gateway) |
 | `BROWSERBASE_API_KEY` | For hosted browsers | Opens the store pages in a hosted browser. | [browserbase.com](https://www.browserbase.com) |
 | `PARALLEL_API_KEY` | Optional | Adds public web search before the browser opens a page. | [parallel.ai](https://parallel.ai) |
 
 To try it with one key, set `STAGEHAND_BROWSER=local`. Benji then drives Chrome on
-your machine and needs only `OPENAI_API_KEY`. Some stores block a local browser sooner
+your machine and needs only `AI_GATEWAY_API_KEY`. Some stores block a local browser sooner
 than a hosted one.
 
 | Setting | Default | Change it when |
 | --- | --- | --- |
 | `STAGEHAND_BROWSER` | `browserbase` | Set `local` to use your own Chrome. |
-| `BENJI_MODEL` | `gpt-5.6-sol` | Your OpenAI account uses a different model. |
+| `BENJI_MODEL` | `openai/gpt-5.6-sol` | You want another [AI Gateway model](https://vercel.com/ai-gateway/models). |
 | `BENJI_BROWSERBASE_PROXIES` | off | Set `1` for Browserbase managed proxies. Needs a paid Browserbase plan. |
 | `BENJI_BROWSERBASE_VERIFIED` | off | Set `1` for Browserbase Verified Browsers. Needs the Enterprise plan. |
 | `BENJI_OPERATOR_USERNAME`, `BENJI_OPERATOR_PASSWORD` | unset | You expose the app beyond your own machine. The password must be at least 32 bytes. |
@@ -98,7 +98,7 @@ and asks for four values:
 
 | Variable | What to enter |
 | --- | --- |
-| `OPENAI_API_KEY` | Your OpenAI key. |
+| `AI_GATEWAY_API_KEY` | Your [AI Gateway](https://vercel.com/docs/ai-gateway) key. |
 | `BROWSERBASE_API_KEY` | Your Browserbase key. The free plan works. |
 | `BENJI_OPERATOR_USERNAME` | A username for signing in to your deployment. |
 | `BENJI_OPERATOR_PASSWORD` | A password of at least 32 characters. |
@@ -115,7 +115,7 @@ sandbox. Benji needs no database.
 ```sh
 bun install
 cp .env.example .env.local
-# Fill in OPENAI_API_KEY and BROWSERBASE_API_KEY, or set STAGEHAND_BROWSER=local.
+# Fill in AI_GATEWAY_API_KEY and BROWSERBASE_API_KEY, or set STAGEHAND_BROWSER=local.
 bun run dev
 ```
 
@@ -142,7 +142,7 @@ email and address instead of inventing them. The `compare_offers` tool does the 
 an offer with unknown shipping or tax is never ranked as cheapest.
 
 The starter buttons fill an editable brief; they do not start a run. Budget and
-delivery fields are sent as context on each turn. New research resets the prior
+delivery fields are sent as context on each turn. New research ends the prior
 conversation and releases its browser. Each `/s/<sessionId>` URL resumes that
 conversation; it is a local operator URL, not a public share link. Export contains
 visible messages, not tool events or screenshots.
