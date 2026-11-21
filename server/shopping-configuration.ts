@@ -16,12 +16,11 @@ export function shoppingConfiguration(): ShoppingConfiguration {
 			? "local"
 			: "browserbase";
 	const missing: string[] = [];
-	if (
-		!configured(process.env.AI_GATEWAY_API_KEY) &&
-		!configured(process.env.VERCEL_OIDC_TOKEN) &&
-		process.env.VERCEL !== "1"
-	)
-		missing.push("AI_GATEWAY_API_KEY");
+	const gatewayKey = process.env.AI_GATEWAY_API_KEY?.trim();
+	const gatewayReady = gatewayKey
+		? configured(gatewayKey)
+		: configured(process.env.VERCEL_OIDC_TOKEN) || process.env.VERCEL === "1";
+	if (!gatewayReady) missing.push("AI_GATEWAY_API_KEY");
 	if (
 		browserMode === "browserbase" &&
 		!configured(process.env.BROWSERBASE_API_KEY)

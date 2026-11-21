@@ -40,7 +40,9 @@ try {
 		signal: AbortSignal.timeout(90_000),
 	});
 	session = created.session;
-	const first = await created.delivery.result();
+	const first = await created.delivery.result({
+		signal: AbortSignal.timeout(90_000),
+	});
 	remember((await session.snapshot()).events);
 	assert.equal(first.status, "completed");
 	assert.ok(first.reply?.includes("Example Domain"));
@@ -50,7 +52,7 @@ try {
 			"Without navigating, use snapshot to confirm the current page title and URL. Reply briefly.",
 			{ signal: AbortSignal.timeout(45_000) },
 		)
-	).result();
+	).result({ signal: AbortSignal.timeout(90_000) });
 	remember((await session.snapshot()).events);
 	assert.equal(second.status, "completed");
 	assert.equal(
@@ -60,7 +62,7 @@ try {
 	);
 	const ended = await (
 		await session.end({ reason: "Completed browser retirement regression" })
-	).result();
+	).result({ signal: AbortSignal.timeout(90_000) });
 	assert.ok(ended.sessionEnded, "End must retire the session");
 	const completionDeadline = Date.now() + 20_000;
 	let completed = false;

@@ -1,7 +1,7 @@
 "use client";
 
 import { Client } from "eve/client";
-import { openInteractions } from "eve/events";
+import { activeTurn, openInteractions } from "eve/events";
 import { useEveAgent } from "eve/react";
 import {
 	ArrowUp,
@@ -95,6 +95,7 @@ export default function Chat({
 		},
 	});
 	const busy = agent.status === "busy";
+	const turnOpen = activeTurn(agent.view) !== undefined;
 	const waiting = busy || agent.status === "resuming" || retiring;
 	let activity = "Researching your options…";
 	if (agent.status === "resuming") activity = "Loading conversation…";
@@ -491,7 +492,7 @@ export default function Chat({
 									)}
 								</Button>
 								<div className="flex gap-2">
-									{busy && (
+									{(busy || turnOpen) && (
 										<Button
 											variant="outline"
 											size="icon"
