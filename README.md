@@ -38,24 +38,24 @@ It follows rules drawn from a study of how personal agents shop on live stores:
 
 ```mermaid
 flowchart TD
-    request["Shopping request"] --> kind{"What kind of request?"}
-    kind -- "open discovery or comparison" --> research["Research the web (web_search, web_fetch)"]
-    kind -- "named product or buy it" --> sellers
+    request["Shopping request"] --> kind{"What kind<br/>of request?"}
+    kind -- "open discovery<br/>or comparison" --> research["Research the web<br/>(web_search, web_fetch)"]
+    kind -- "named product<br/>or buy it" --> sellers
     research --> product["Pick the product"]
-    product --> sellers["Check at least 3 sellers, brand site included"]
-    sellers --> total["Compare delivered totals and unit prices (compare_offers)"]
-    total --> buy{"Asked to add to cart or check out?"}
-    buy -- no --> recommend["Recommend the product and seller"]
-    buy -- yes --> open["Open the exact product in the browser"]
-    open --> exact{"Exact product and variant in stock?"}
-    exact -- no --> ask["Stop and ask, never substitute"]
-    exact -- yes --> cart["Add to cart, read the cart back"]
+    product --> sellers["Check at least 3 sellers,<br/>brand site included"]
+    sellers --> total["Compare delivered totals<br/>and unit prices<br/>(compare_offers)"]
+    total --> buy{"Asked to<br/>add to cart<br/>or check out?"}
+    buy -- no --> recommend["Recommend the<br/>product and seller"]
+    buy -- yes --> open["Open the exact product<br/>in the browser"]
+    open --> exact{"Exact product<br/>and variant<br/>in stock?"}
+    exact -- no --> ask["Stop and ask,<br/>never substitute"]
+    exact -- yes --> cart["Add to cart,<br/>read the cart back"]
     cart --> guest["Check out as a guest"]
-    guest --> human{"Sign-in, CAPTCHA or one-time code?"}
-    human -- yes --> handoff["Hand off to the shopper (human_handoff)"]
+    guest --> human{"Sign-in, CAPTCHA<br/>or one-time code?"}
+    human -- yes --> handoff["Hand off to the shopper<br/>(human_handoff)"]
     handoff --> guest
-    human -- no --> pay["Reach the payment page and stop"]
-    pay --> report["Report each step: done, blocked or not attempted"]
+    human -- no --> pay["Reach the payment<br/>page and stop"]
+    pay --> report["Report each step:<br/>done, blocked or not attempted"]
 
     classDef step fill:#FFFFFF,stroke:#9AA3AF,color:#111827
     classDef decision fill:#E8F0FE,stroke:#2F6FEB,color:#0B1F44
