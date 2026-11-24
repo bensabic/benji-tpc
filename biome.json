@@ -59,10 +59,7 @@
 			}
 		},
 		{
-			"includes": [
-				"scripts/test-parallel-production.mjs",
-				"scripts/test-session-retirement.mjs"
-			],
+			"includes": ["scripts/test-session-retirement.mjs"],
 			"linter": {
 				"rules": {
 					"correctness": {

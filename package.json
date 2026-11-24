@@ -11,8 +11,6 @@
 		"build": "bun run build:agent && next build",
 		"start": "next start --hostname 127.0.0.1 --port 4320",
 		"test": "vitest run",
-		"test:parallel:live": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/test-parallel-research.mjs",
-		"test:parallel:production": "bun run build && node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/test-parallel-production.mjs",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check .",
 		"check": "bun run test && bun run typecheck && bun run lint && bun run build",
