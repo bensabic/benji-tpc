@@ -70,6 +70,17 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["components/ui/input-group.tsx", "components/ui/item.tsx"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"useSemanticElements": "off",
+						"useKeyWithClickEvents": "off"
+					}
+				}
+			}
 		}
 	]
 }

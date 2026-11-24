@@ -33,6 +33,10 @@ the wordmark, face icon, and app icon.
 
 ## Chat interface
 
-The chat uses adapted [prompt-kit](https://prompt-kit.com) components in
-`components/ui/`. Their MIT notice is in
-[`components/ui/PROMPT-KIT-LICENSE.md`](components/ui/PROMPT-KIT-LICENSE.md).
+The chat follows the [shadcn/ui AI Elements](https://ui.shadcn.com/docs/ai-elements)
+patterns. `components/ui/` holds unmodified shadcn/ui components in the Base UI
+`base-nova` style, added with `bunx shadcn@latest add` and reformatted by Biome;
+[`components.json`](components.json) records the configuration. `components/chat/`
+composes them for Benji and renders Eve's message parts directly from `useEveAgent`,
+with no AI SDK `useChat` layer. Tool calls show a fixed phrase per tool from
+[`lib/eve-parts.ts`](lib/eve-parts.ts), never their input or output.
