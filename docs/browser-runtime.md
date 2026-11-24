@@ -48,10 +48,13 @@ stable across restarts.
 
 ## Updating an existing deployment
 
-Benji now authenticates to AI Gateway with the Vercel project's OIDC token. Remove
-`AI_GATEWAY_API_KEY` from the project's environment variables and from `.env.local`: Eve
-prefers a key over the OIDC token while one is set, and the app shows a notice until it is
-removed. Locally, run `vercel link` and `vercel env pull .env.local` to get a token.
+Benji now authenticates to AI Gateway with the Vercel project's OIDC token, and web search
+runs through AI Gateway too. AI Gateway must be available to the project's team, and
+searches are billed to its AI Gateway usage. Remove `AI_GATEWAY_API_KEY` and
+`PARALLEL_API_KEY` from the project's environment variables and from `.env.local`: Eve
+prefers a gateway key over the OIDC token while one is set, and the app shows a notice until
+it is removed. `PARALLEL_API_KEY` is no longer read. Locally, run `vercel link` and
+`vercel env pull .env.local` to get a token.
 
 This cleanup changes environment names, the default Context metadata path, and the browser
 state namespace. Before deploying it, finish or reset active conversations using the previous

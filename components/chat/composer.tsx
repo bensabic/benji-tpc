@@ -52,7 +52,9 @@ export function Composer({
 	const preferencesId = useId();
 	const budgetId = useId();
 	const destinationId = useId();
-	const preferencesSet = Boolean(preferences.budget || preferences.destination);
+	const preferencesSet = Boolean(
+		preferences.budget.trim() || preferences.destination.trim(),
+	);
 
 	return (
 		<form

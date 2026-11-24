@@ -72,7 +72,7 @@ conversation can pause for the shopper at a handoff and pick up where it stopped
 The model runs through [AI Gateway](https://vercel.com/docs/ai-gateway) and authenticates
 with your Vercel project's OIDC token, so there is no model key to manage. Public web
 search uses [Parallel through AI Gateway](https://vercel.com/ai-gateway/models/parallel/search)
-with the same token, billed per search to your AI Gateway usage. One key runs the full agent. Everything else is optional and off by default.
+with the same token, billed per search to your AI Gateway usage. Everything else is optional and off by default.
 
 | Variable | Needed | What it does | Where to get it |
 | --- | --- | --- | --- |
@@ -92,11 +92,11 @@ than a hosted one.
 | `BENJI_BROWSERBASE_VERIFIED` | off | Set `1` for Browserbase Verified Browsers. Needs the Enterprise plan. |
 | `BENJI_OPERATOR_USERNAME`, `BENJI_OPERATOR_PASSWORD` | unset | You expose the app beyond your own machine. The password must be at least 32 bytes. |
 
-[`.env.example`](.env.example) lists every variable.
+[`.env.example`](.env.example) lists the settings you can add to `.env.local`.
 
 ## Deploy
 
-Click **Deploy with Vercel** above. Vercel copies the repository to your GitHub account
+Click **Deploy with Vercel** above. Vercel copies the repository to your GitHub account,
 creates a private Blob store, and asks for four values:
 
 | Variable | What to enter |
@@ -124,7 +124,7 @@ a running Docker daemon for Eve's local sandbox. Benji needs no database.
 bun install
 vercel link                 # connect this directory to a Vercel project
 vercel env pull .env.local  # writes VERCEL_OIDC_TOKEN for AI Gateway
-# Optional: add BROWSERBASE_API_KEY to .env.local. .env.example lists every variable.
+# Optional: add BROWSERBASE_API_KEY to .env.local.
 bun run dev
 ```
 

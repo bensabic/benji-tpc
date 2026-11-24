@@ -20,7 +20,7 @@ import {
 	MessageScrollerViewport,
 } from "@/components/ui/message-scroller";
 import { TraceLine, TraceTitle } from "@/components/ui/trace";
-import { messageBlocks, messageText } from "@/lib/eve-parts";
+import { type MessageBlock, messageBlocks, messageText } from "@/lib/eve-parts";
 
 function UserMessage({ message }: { message: EveMessage }) {
 	return (
@@ -37,15 +37,7 @@ function UserMessage({ message }: { message: EveMessage }) {
 	);
 }
 
-function AgentMessage({
-	message,
-	live,
-}: {
-	message: EveMessage;
-	live: boolean;
-}) {
-	const blocks = messageBlocks(message, live);
-	if (blocks.length === 0) return null;
+function AgentMessage({ blocks }: { blocks: MessageBlock[] }) {
 	return (
 		<Message>
 			<MessageContent className="gap-3">
@@ -80,19 +72,27 @@ export function MessageList({
 				<MessageScrollerViewport aria-label="Messages">
 					<MessageScrollerContent className="mx-auto w-full max-w-3xl gap-7 px-4 py-8 sm:px-8">
 						{messages.length === 0 && empty}
-						{messages.map((message) => (
-							<MessageScrollerItem
-								key={message.id}
-								messageId={message.id}
-								scrollAnchor={message.role === "user"}
-							>
-								{message.role === "user" ? (
-									<UserMessage message={message} />
-								) : (
-									<AgentMessage message={message} live={live} />
-								)}
-							</MessageScrollerItem>
-						))}
+						{messages.map((message) => {
+							if (message.role === "user")
+								return (
+									<MessageScrollerItem
+										key={message.id}
+										messageId={message.id}
+										scrollAnchor
+									>
+										<UserMessage message={message} />
+									</MessageScrollerItem>
+								);
+							// A message with only hidden or empty parts has nothing to
+							// show, so it gets no item and leaves no gap.
+							const blocks = messageBlocks(message, live);
+							if (blocks.length === 0) return null;
+							return (
+								<MessageScrollerItem key={message.id} messageId={message.id}>
+									<AgentMessage blocks={blocks} />
+								</MessageScrollerItem>
+							);
+						})}
 						{activity && (
 							<TraceLine status="running" role="status">
 								<TraceTitle>{activity}</TraceTitle>

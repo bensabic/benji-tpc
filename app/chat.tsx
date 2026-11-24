@@ -155,10 +155,12 @@ export default function Chat({
 		}
 	}
 
-	function answer(reply: InteractionAnswer) {
-		void agent
-			.respond([reply])
-			.catch(() => setError("Reply failed. Try again."));
+	async function answer(reply: InteractionAnswer) {
+		try {
+			await agent.respond([reply]);
+		} catch {
+			setError("Reply failed. Try again.");
+		}
 	}
 
 	function exportConversation() {

@@ -1,7 +1,7 @@
 "use client";
 
 import type { openInteractions } from "eve/events";
-import { useId } from "react";
+import { useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,10 +24,18 @@ function InteractionPrompt({
 	onAnswer,
 }: {
 	interaction: OpenInteraction;
-	onAnswer: (answer: InteractionAnswer) => void;
+	onAnswer: (answer: InteractionAnswer) => Promise<void>;
 }) {
 	const titleId = useId();
 	const replyId = useId();
+	// The prompt stays until Eve settles the interaction, so block a second
+	// answer while the first is on its way.
+	const [sending, setSending] = useState(false);
+	function submit(answer: InteractionAnswer) {
+		if (sending) return;
+		setSending(true);
+		void onAnswer(answer).finally(() => setSending(false));
+	}
 	return (
 		<Item
 			variant="outline"
@@ -44,7 +52,8 @@ function InteractionPrompt({
 						<Button
 							key={option.id}
 							variant="outline"
-							onClick={() => onAnswer({ interactionId, optionId: option.id })}
+							disabled={sending}
+							onClick={() => submit({ interactionId, optionId: option.id })}
 						>
 							{option.label}
 						</Button>
@@ -60,16 +69,18 @@ function InteractionPrompt({
 							const text = String(
 								new FormData(event.currentTarget).get("reply") ?? "",
 							).trim();
-							if (text) onAnswer({ interactionId, text });
+							if (text) submit({ interactionId, text });
 						}}
 					>
 						<div className="min-w-48 flex-1 space-y-1.5">
 							<label htmlFor={replyId} className="text-sm">
 								Your reply
 							</label>
-							<Input id={replyId} name="reply" required />
+							<Input id={replyId} name="reply" required disabled={sending} />
 						</div>
-						<Button type="submit">Send reply</Button>
+						<Button type="submit" disabled={sending}>
+							Send reply
+						</Button>
 					</form>
 				</ItemFooter>
 			)}
@@ -83,7 +94,7 @@ export function Interactions({
 	onAnswer,
 }: {
 	interactions: readonly OpenInteraction[];
-	onAnswer: (answer: InteractionAnswer) => void;
+	onAnswer: (answer: InteractionAnswer) => Promise<void>;
 }) {
 	return interactions.map((interaction) => (
 		<InteractionPrompt

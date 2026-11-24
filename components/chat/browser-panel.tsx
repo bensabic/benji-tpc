@@ -2,6 +2,7 @@ import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 
 import type { browserPreview } from "@/app/projection";
+import { redactUrl } from "@/lib/browser/display-url";
 import { cn } from "@/lib/utils";
 
 /** The latest merchant page the agent captured, with its address and status. */
@@ -30,7 +31,7 @@ export function BrowserPanel({
 			</div>
 			{preview.url && (
 				<p className="break-all border-b border-border px-5 py-3 text-xs text-muted-foreground">
-					{preview.url}
+					{redactUrl(preview.url)}
 				</p>
 			)}
 			{preview.screenshot ? (

@@ -63,6 +63,7 @@ describe("browser handoff", () => {
 		vi.stubEnv("VERCEL", "1");
 		vi.stubEnv("VERCEL_ENV", "preview");
 		vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "benji.vercel.app");
+		vi.stubEnv("BENJI_PUBLIC_URL", undefined);
 		expect(issueBrowserHandoffUrl(target, { secret })).toMatch(
 			/^https:\/\/benji\.vercel\.app\/handoff\/v1\./,
 		);
@@ -77,6 +78,7 @@ describe("browser handoff", () => {
 		vi.stubEnv("VERCEL", "1");
 		vi.stubEnv("VERCEL_ENV", "development");
 		vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "benji.vercel.app");
+		vi.stubEnv("BENJI_PUBLIC_URL", undefined);
 		expect(() => issueBrowserHandoffUrl(target, { secret })).toThrow(
 			BrowserHandoffError,
 		);
