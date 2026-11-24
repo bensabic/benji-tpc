@@ -12,7 +12,7 @@ assert.equal(
 	"Set BENJI_LIVE_PARALLEL=1 to run this live production-build test.",
 );
 for (const name of [
-	"AI_GATEWAY_API_KEY",
+	"VERCEL_OIDC_TOKEN",
 	"PARALLEL_API_KEY",
 	"BROWSERBASE_API_KEY",
 ])
