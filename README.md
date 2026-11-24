@@ -70,14 +70,14 @@ conversation can pause for the shopper at a handoff and pick up where it stopped
 ## Keys
 
 The model runs through [AI Gateway](https://vercel.com/docs/ai-gateway) and authenticates
-with your Vercel project's OIDC token, so there is no model key to manage. One key runs
-the full agent. Everything else is optional and off by default.
+with your Vercel project's OIDC token, so there is no model key to manage. Public web
+search uses [Parallel through AI Gateway](https://vercel.com/ai-gateway/models/parallel/search)
+with the same token, billed per search to your AI Gateway usage. One key runs the full agent. Everything else is optional and off by default.
 
 | Variable | Needed | What it does | Where to get it |
 | --- | --- | --- | --- |
 | `VERCEL_OIDC_TOKEN` | Local runs only | Runs the model (`openai/gpt-5.6-sol` by default) through AI Gateway. A Vercel deployment gets its token automatically. | `vercel env pull`, see [Run locally](#run-locally) |
 | `BROWSERBASE_API_KEY` | For hosted browsers | Opens the store pages in a hosted browser. | [browserbase.com](https://www.browserbase.com) |
-| `PARALLEL_API_KEY` | Optional | Adds public web search before the browser opens a page. | [parallel.ai](https://parallel.ai) |
 
 To try it with no keys, leave `BROWSERBASE_API_KEY` unset. Benji then drives Chrome on
 your machine and needs only the OIDC token. Some stores block a local browser sooner

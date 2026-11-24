@@ -317,7 +317,6 @@ export default function Chat({
 				</section>
 				<BrowserPanel
 					preview={preview}
-					searchEnabled={configuration.searchEnabled}
 					className={showBrowser ? "block" : "hidden lg:block"}
 				/>
 			</div>

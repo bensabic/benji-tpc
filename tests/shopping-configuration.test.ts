@@ -19,7 +19,6 @@ describe("shopping configuration", () => {
 			"VERCEL_ENV",
 			"BROWSERBASE_API_KEY",
 			"STAGEHAND_BROWSER",
-			"PARALLEL_API_KEY",
 		])
 			vi.stubEnv(name, undefined);
 	});

@@ -7,11 +7,9 @@ import { cn } from "@/lib/utils";
 /** The latest merchant page the agent captured, with its address and status. */
 export function BrowserPanel({
 	preview,
-	searchEnabled,
 	className,
 }: {
 	preview: ReturnType<typeof browserPreview>;
-	searchEnabled: boolean;
 	className?: string;
 }) {
 	return (
@@ -58,11 +56,7 @@ export function BrowserPanel({
 				</div>
 			)}
 			<div className="space-y-2 border-t border-border bg-muted/40 px-5 py-4 text-xs leading-5 text-muted-foreground">
-				<p>
-					{searchEnabled
-						? "Public web search and browser verification are configured."
-						: "Research uses the browser. Add PARALLEL_API_KEY to enable public web search."}
-				</p>
+				<p>Benji searches the public web, then checks offers in the browser.</p>
 			</div>
 		</aside>
 	);

@@ -20,7 +20,6 @@ export type ShoppingConfiguration = {
 	gatewayAuth: GatewayAuth;
 	/** Whether a request can be sent with the current configuration. */
 	ready: boolean;
-	searchEnabled: boolean;
 	browserMode: "local" | "browserbase";
 };
 
@@ -73,7 +72,6 @@ export function shoppingConfiguration(
 		missing,
 		gatewayAuth: auth,
 		ready: missing.length === 0 && auth !== "key-unresolved",
-		searchEnabled: configured(process.env.PARALLEL_API_KEY),
 		browserMode,
 	};
 }

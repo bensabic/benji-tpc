@@ -11,11 +11,7 @@ assert.equal(
 	"1",
 	"Set BENJI_LIVE_PARALLEL=1 to run this live production-build test.",
 );
-for (const name of [
-	"VERCEL_OIDC_TOKEN",
-	"PARALLEL_API_KEY",
-	"BROWSERBASE_API_KEY",
-])
+for (const name of ["VERCEL_OIDC_TOKEN", "BROWSERBASE_API_KEY"])
 	assert.ok(process.env[name], `${name} is required`);
 const directory = await mkdtemp(path.join(tmpdir(), "benji-production-test-"));
 const socket = createServer();

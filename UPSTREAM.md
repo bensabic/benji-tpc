@@ -11,7 +11,9 @@ Benji's browser runtime is adapted from Browserbase BELL.
 
 The browser session lifecycle, the browser tools (`run`, `snapshot`, `screenshot`),
 reusable Browserbase Contexts, human handoff, the operator credential vault, Baselayer
-merchant access, the Parallel search tools, and the tests for each. Benji does not
+merchant access, and the tests for each. BELL's Parallel search and extract tools are
+replaced by Eve's built-in `web_search`, which runs Parallel through AI Gateway, and
+`web_fetch`. Benji does not
 include BELL's messaging, payment, or monitoring integrations.
 
 ## What Benji adds

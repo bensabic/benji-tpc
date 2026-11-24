@@ -9,8 +9,8 @@ The live proxy location test runs only when `BENJI_LIVE_PROXY_LOCATION=1` and
 
 ## Parallel research to browser
 
-Run `vercel env pull .env.local` for a current `VERCEL_OIDC_TOKEN`, and set `PARALLEL_API_KEY` and
-`BROWSERBASE_API_KEY` in the same ignored file.
+Run `vercel env pull .env.local` for a current `VERCEL_OIDC_TOKEN`, and set `BROWSERBASE_API_KEY`
+in the same ignored file. Search runs through AI Gateway and needs no key of its own.
 Install Chrome or set `TEST_CHROME_PATH`, then run:
 
 ```sh
